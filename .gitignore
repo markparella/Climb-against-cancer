@@ -1,3 +1,4 @@
 _preview/
+_preview-*/
 .DS_Store
 node_modules/
