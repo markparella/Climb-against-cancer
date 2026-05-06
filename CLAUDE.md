@@ -35,12 +35,18 @@ Don't rename the files casually — incoming links and the deploy workflow assum
 
 ## Architecture
 
-Five hand-maintained HTML pages share one stylesheet (`styles.css`). There is no templating, so the `<nav>` block and the `<footer class="site">` + `.foot-bottom` block are duplicated verbatim across every page. When adding/removing a nav link or changing the footer, update **all five pages**.
+Five hand-maintained HTML pages share one stylesheet (`styles.css`). There is no templating, so several blocks are **duplicated verbatim across pages** and must be edited in lock-step:
+
+- `<nav class="nav">` — present on all 5 pages (with the active link's `class="is-active"` differing per page)
+- `<footer class="site">` + `.foot-bottom` — identical on all 5 pages
+- `<div class="page-head__ridge">` inline mountain-ridge SVG — identical on the 4 non-home pages
+
+When adding/removing a nav link, changing the footer, or tweaking the ridge silhouette, update **every page that contains that block**.
 
 Each page follows one of two header patterns:
 
 - **`index.html`** uses `<section class="hero">` — full-bleed photo hero (`assets/hero.jpg`), dark gradient overlay, the `<nav>` sits inside it, content centered.
-- **All other pages** use `<header class="page-head">` — quieter dark-navy header with the same `<nav>`, a Fraunces serif title, and a subtle SVG mountain-ridge silhouette at the bottom (the same inline SVG is duplicated on each non-home page).
+- **All other pages** use `<header class="page-head">` — quieter dark-navy header with the same `<nav>`, a Fraunces serif title, and the duplicated ridge SVG at the bottom.
 
 After the header, every page composes from a shared section vocabulary defined in `styles.css`:
 
@@ -50,6 +56,14 @@ After the header, every page composes from a shared section vocabulary defined i
 - `.posts` / `.post` — journal entries
 - `.bio-grid`, `.contact-grid`, `.summits` — page-specific compositions
 - `.quote` — pull-quote block with `<blockquote>` + `<cite>`
+
+### About vs. Expeditions — two different lists
+
+Don't conflate them when editing:
+
+- `about.html` → `.summits` "Summit Log" — the 5 peaks Mark has summited personally (Aconcagua, Everest, Ama Dablam, Denali, Mt. Shasta).
+- `stories.html` → `.exp-list` — the 6 campaign expeditions (some with year `—` placeholders for the foundational/training climbs).
+- `index.html` → `.exp-list` — a shorter recent-expeditions teaser linking to `stories.html`.
 
 ## Design system (in `styles.css`)
 
@@ -63,6 +77,10 @@ Tokens live on `:root` and are used pervasively — change them there, not inlin
 - Type pairing: **Fraunces** (display serif, italics for accent) + **Inter** (body sans), loaded from Google Fonts via `@import` at the top of `styles.css`
 
 The italic `<em>` highlight inside h1/h2 is a deliberate stylistic motif. Preserve it when editing copy.
+
+## Contact form (no backend)
+
+`contact.html` posts via `<form action="mailto:climb@climbagainstcancer.com" method="post" enctype="text/plain">`. There is no server, no JS, no validation beyond native HTML. Don't introduce a fetch/AJAX submit unless you're also wiring up an actual endpoint.
 
 ## Assets
 
@@ -80,7 +98,12 @@ This means:
 
 ## Editorial conventions
 
-- Beneficiary is the **Cancer Support Community South Bay** (CSC South Bay); donation portal: `https://cscrb.gnosishosting.net/Portal/Donate/ClimbAgainstCancer`. Don't change either without confirmation.
+Pinned facts — don't change without confirmation:
+
+- Beneficiary: **Cancer Support Community South Bay** (CSC South Bay), Redondo Beach, California.
+- Donation portal: `https://cscrb.gnosishosting.net/Portal/Donate/ClimbAgainstCancer`.
+- Contact email: `climb@climbagainstcancer.com`.
+- Instagram: `https://www.instagram.com/climbagainstcancer/` (`@climbagainstcancer`).
 - Founder copy: Mark Parella, US Navy veteran, Denver, Colorado, founded 2016.
 - The "USA × Nepal Friendship Team" reference and June 8, 2022 Denali summit are factual claims about real expeditions — don't invent new ones; ask first.
 - Repeated tagline / creed: *"Bringing happiness and self-worth by making a difference in someone else's life."*
